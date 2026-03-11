@@ -4,8 +4,8 @@ import { signToken, ADMIN_COOKIE } from '@/lib/auth'
 export async function POST(req: NextRequest) {
   const { password } = await req.json()
 
-  const adminPassword = process.env.ADMIN_PASSWORD
-  if (!adminPassword || password !== adminPassword) {
+  const adminPassword = (process.env.ADMIN_PASSWORD || '').trim()
+  if (!adminPassword || password.trim() !== adminPassword) {
     return NextResponse.json({ error: 'Incorrect password' }, { status: 401 })
   }
 
